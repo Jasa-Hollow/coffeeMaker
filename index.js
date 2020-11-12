@@ -39,7 +39,7 @@ function onOff(state){
 }
 
 // ----------------------------------
-function on(onOff, grinder, tank){
+function on(onOff){
 	let state = "Encendida"
 	onOff(state)
 	coffeeMaker.grinder(grind)
