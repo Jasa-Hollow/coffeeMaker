@@ -5,13 +5,13 @@ let coffeeMakerNR = {
 	grinder: function(grind){ // Molino y su respectiva función.
 		setTimeout(()=>{
 			console.log("...")
-			grind(this.coffee) // Callback de la función "moler"
+			grind(this.coffee, this.state) // Callback de la función "moler"
 		}, 3000)
 	},
 	boiler: function(boil){ // Tanque de agua y caldera.
 		setTimeout(()=>{
 			console.log("...")
-			boil(this.water) // Callback de la función "hervir"
+			boil(this.water, this.state) // Callback de la función "hervir"
 		}, 3000)
 	},
 	brewer: function(brew){ //Cabeza de grupo, donde se vierten los materiales y se sirve el café.
@@ -28,7 +28,7 @@ function onOff(state){
 	if (state === "Apagada"){
 		console.log("La máquina está: " + state + ", se encenderá pronto") // Se muestra el estado por defecto.
 		setTimeout(()=>{
-			console.log("...")
+			console.log("...") ; coffeeMakerR.state = "Encendida"
 			on(onOff) // Se llama la función para ejecutarla en caso de que esté Apagada.
 		}, 3000)
 	}else if(state === "Encendida"){
@@ -39,13 +39,13 @@ function onOff(state){
 function on(onOff){
 	let state = "Encendida" // Se cambia el estado de la máquina a encendido.
 	onOff(state)
-	coffeeMakerNR.grinder(grind) // Se pone en acción el molino.
-	coffeeMakerNR.boiler(boil) // Se pone en acción el tanque de agua y la caldera.
+	coffeeMakerR.grinder(grind) // Se pone en acción el molino.
+	coffeeMakerR.boiler(boil) // Se pone en acción el tanque de agua y la caldera.
 	coffeeMakerR.brewer(brew) // Se pone en acción el "brewer", luego de los anteriores procesos.
 }
 
-function grind(coffee){
-	if (coffee === false){
+function grind(coffee, state){
+	if (coffee === false && state === "Encendida"){
 		let i = 0
 		while(i < 1){
 			let gramos = prompt("Ingresa la cantidad de gramos de café a moler") // Recarga de granos de café.
@@ -62,8 +62,8 @@ function grind(coffee){
 	}
 }
 
-function boil(water){
-	if (water === false){
+function boil(water, state){
+	if (water === false && state === "Encendida"){
 		let i = 0
 		while(i < 1){
 			let miliL = prompt("Ingresa la cantidad de agua a hervir") // Recarga de agua en el tanque.
