@@ -1,5 +1,5 @@
 let coffeeMakerNR = {
-	state: "Apagada", //Estado inicial por defecto
+	state: false, //Estado inicial por defecto
 	coffee: false,	//Estado inicial por defecto
 	water: false,	//Estado inicial por defecto
 	grinder: function(grind){ // Molino y su respectiva función.
@@ -25,27 +25,27 @@ let coffeeMakerNR = {
 let coffeeMakerR = Object.create(coffeeMakerNR) // Objeto que define a la máquina, cuando ya está casi lista para servir el café.
 
 function onOff(state){
-	if (state === "Apagada"){
-		console.log("La máquina está: " + state + ", se encenderá pronto") // Se muestra el estado por defecto.
+	if (state === false){
+		console.log("La máquina está: Apagada, se encenderá pronto") // Se muestra el estado por defecto.
 		setTimeout(()=>{
-			console.log("...") ; coffeeMakerR.state = "Encendida"
+			console.log("...") ; coffeeMakerR.state = true
 			on(onOff) // Se llama la función para ejecutarla en caso de que esté Apagada.
 		}, 3000)
-	}else if(state === "Encendida"){
-		console.log("La máquina está: " + state)
+	}else if(state === true){
+		console.log("La máquina está: Encendida")
+		coffeeMakerR.grinder(grind) // Se pone en acción el molino.
+		coffeeMakerR.boiler(boil) // Se pone en acción el tanque de agua y la caldera.
+		coffeeMakerR.brewer(brew) // Se pone en acción el "brewer", luego de los anteriores procesos.
 	}
 }
 
 function on(onOff){
-	let state = "Encendida" // Se cambia el estado de la máquina a encendido.
-	onOff(state)
-	coffeeMakerR.grinder(grind) // Se pone en acción el molino.
-	coffeeMakerR.boiler(boil) // Se pone en acción el tanque de agua y la caldera.
-	coffeeMakerR.brewer(brew) // Se pone en acción el "brewer", luego de los anteriores procesos.
+	let state = true // Se cambia el estado de la máquina a encendido.
+	onOff(state) // Se ejecutra de ne
 }
 
 function grind(coffee, state){
-	if (coffee === false && state === "Encendida"){
+	if (coffee === false && state === true){
 		let i = 0
 		while(i < 1){
 			let gramos = prompt("Ingresa la cantidad de gramos de café a moler") // Recarga de granos de café.
@@ -63,7 +63,7 @@ function grind(coffee, state){
 }
 
 function boil(water, state){
-	if (water === false && state === "Encendida"){
+	if (water === false && state === true){
 		let i = 0
 		while(i < 1){
 			let miliL = prompt("Ingresa la cantidad de agua a hervir") // Recarga de agua en el tanque.
@@ -88,7 +88,7 @@ function brew(coffee, water){
 			taza = "Llena" // Se llena la taza.
 			i++
 		}else if(taza === "Llena"){
-			console.log("¡Disfrute su bebida!")
+			console.log("Se ha servido. ¡Disfrute su bebida!")
 			i++
 		}else{
 			console.log("No se puede servir el café debido a que no están listos los ingredientes...")
