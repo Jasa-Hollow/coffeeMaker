@@ -41,7 +41,7 @@ function onOff(state){
 
 function on(onOff){
 	let state = true // Se cambia el estado de la máquina a encendido.
-	onOff(state) // Se ejecutra de ne
+	onOff(state)
 }
 
 function grind(coffee, state){
